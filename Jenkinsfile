@@ -2,9 +2,11 @@ pipeline {
   agent { 
     docker {
       image 'node:12-alpine'
-      args '-u 502:20'
     }
-   }
+  }
+  environment {
+    npm_config_cache = 'npm-cache'
+  }
   stages {
     stage('deploy to XDN') {
       steps {
