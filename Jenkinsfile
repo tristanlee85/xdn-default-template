@@ -1,14 +1,19 @@
 pipeline {
-    agent {
+  agent {
+    label 'docker'
+  }
+
+  stages {
+    stage('deploy to XDN') { 
+      agent {
         docker {
-            image 'node:12'
+          label 'docker'
+          image 'node:12-alpine'
         }
+      }
+      steps {
+        sh 'npm install' 
+      }
     }
-    stages {
-        stage('deploy to XDN') { 
-            steps {
-                sh 'npm install' 
-            }
-        }
-    }
+  }
 }
