@@ -7,7 +7,7 @@ pipeline {
   stages {
     stage('deploy to XDN') {
       steps {
-        sh 'node --version' 
+        sh 'npm i' 
       }
     }
   }
