@@ -28,7 +28,7 @@ pipeline {
 
     stage('env') {
       steps {
-        sg 'printenv'
+        sh 'printenv'
       }
     }
 
