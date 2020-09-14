@@ -28,9 +28,6 @@ pipeline {
 
     stage('Setup environment') {
       steps {
-        script {
-          env.BRANCH_NAME = (env.GIT_BRANCH == "origin/master" && echo "master") || env.GIT_BRANCH
-        }
         sh 'printenv'
       }
     }
