@@ -12,7 +12,7 @@
 //     environment. This environment does not exist by default, you must create it using moovweb.app.
 //     Therefore, you can push to production by creating a GitHub release, or by using the "Promote to Environment"
 //     menu when viewing a deployment in moovweb.app.
-// #
+//
 // In order for this action to deploy your site, you must create a deploy token from the site settings page
 // in Moovweb.app and configure it as a secret called "xdn_deploy_token" in your repo on GitHub.
 pipeline {
