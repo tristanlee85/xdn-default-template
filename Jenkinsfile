@@ -27,9 +27,7 @@ pipeline {
     }
 
     stage('Deploy to XDN') {
-      script {
-        // env.BRANCH_ARG = 
-      }
+      
       steps {
         sh 'printenv'
         // sh "npm run xdn:deploy -- ${'--branch=$BRANCH_NAME' || ''} --token=$xdn_deploy_token ${{github.event_name == 'push' && env.BRANCH_NAME == 'master' && '--environment=staging' || ''}} ${{github.event_name == 'release' && '--environment=production' || ''}}"
