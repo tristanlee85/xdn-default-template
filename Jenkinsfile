@@ -27,8 +27,16 @@ pipeline {
     }
 
     stage('env') {
+      when { branch 'master' }
       steps {
-        sh 'printenv'
+        echo "Branch is master $BRANCH_NAME"
+      }
+    }
+
+    stage('env') {
+      when { not { branch 'master' } }
+      steps {
+        echo "Branch is $BRANCH_NAME"
       }
     }
 
