@@ -40,7 +40,7 @@ pipeline {
 
     stage('Deploy to XDN') {
       steps {
-        sh "npm run xdn:deploy -- --token=$xdn_deploy_token ${XDN_BRANCH_ARG} ${XDN_ENV_ARG}"
+        sh "npm run deploy -- --token=$xdn_deploy_token ${XDN_BRANCH_ARG} ${XDN_ENV_ARG}"
       }
     }
   }
