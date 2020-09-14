@@ -27,16 +27,16 @@ pipeline {
     }
 
     stage('env') {
-      when { branch 'master' }
+      when { branch 'origin/master' }
       steps {
-        echo "Branch is master $BRANCH_NAME"
+        echo "Branch is master $GITHUB_BRANCH"
       }
     }
 
     stage('env1') {
-      when { not { branch 'master' } }
+      when { not { branch 'origin/master' } }
       steps {
-        echo "Branch is $BRANCH_NAME"
+        echo "Branch is $GITHUB_BRANCH"
       }
     }
 
