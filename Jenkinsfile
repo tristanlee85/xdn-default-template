@@ -22,17 +22,30 @@ pipeline {
 
     stage('Install packages') {
       steps {
-        sh 'npm ci'
+        sh 'npm i'
       }
     }
 
-    stage('Deploy to XDN') {
-      
+    stage('env') {
       steps {
-        sh 'printenv'
-        // sh "npm run xdn:deploy -- ${'--branch=$BRANCH_NAME' || ''} --token=$xdn_deploy_token ${{github.event_name == 'push' && env.BRANCH_NAME == 'master' && '--environment=staging' || ''}} ${{github.event_name == 'release' && '--environment=production' || ''}}"
+        sg 'printenv'
       }
     }
+
+    // stage('Deploy to XDN:staging') {
+    //   when { not { branch 'master' } }
+    //   steps {
+    //     sh "npm run xdn:deploy -- ${'--branch=$BRANCH_NAME' || ''} --token=$xdn_deploy_token --environment=staging"
+    //   }
+    // }
+
+    // stage('Deploy to XDN:production') {
+    //   when { branch 'master' }
+    //   steps {
+    //     sh 'printvn'
+    //     // sh "npm run xdn:deploy -- --token=$xdn_deploy_token --environment=production"
+    //   }
+    // }
 
 
   }
