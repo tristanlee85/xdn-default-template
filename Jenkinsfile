@@ -55,6 +55,7 @@ pipeline {
           env.XDN_BRANCH_ARG = (env.BRANCH_NAME != "master") ? "--branch=$BRANCH_NAME" : ""
           env.XDN_ENV_ARG = (env.BRANCH_NAME == "master") ? "--environment=production" : ""
         }
+        sh 'printenv'
       }
     }
 
