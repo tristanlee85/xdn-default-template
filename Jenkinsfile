@@ -28,6 +28,10 @@ pipeline {
 
     stage('Setup environment') {
       steps {
+        script {
+          def branch = env.GIT_BRANCH
+          env.BRANCH_NAME = branch.tokenize("/").last()
+        }
         sh 'printenv'
       }
     }
