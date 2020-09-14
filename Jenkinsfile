@@ -38,21 +38,10 @@ pipeline {
       }
     }
 
-    stage('Deploy to XDN:staging') {
-      when { not { branch 'master' } }
+    stage('Deploy to XDN') {
       steps {
-        sh "npm run xdn:deploy -- ${'--branch=$BRANCH_NAME' || ''} --token=$xdn_deploy_token --environment=staging"
+        sh "npm run xdn:deploy -- --token=$xdn_deploy_token ${XDN_BRANCH_ARG} ${XDN_ENV_ARG}"
       }
     }
-
-    // stage('Deploy to XDN:production') {
-    //   when { branch 'master' }
-    //   steps {
-    //     sh 'printvn'
-    //     // sh "npm run xdn:deploy -- --token=$xdn_deploy_token --environment=production"
-    //   }
-    // }
-
-
   }
 }
