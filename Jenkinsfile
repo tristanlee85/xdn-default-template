@@ -33,7 +33,7 @@ pipeline {
       }
     }
 
-    stage('env') {
+    stage('env1') {
       when { not { branch 'master' } }
       steps {
         echo "Branch is $BRANCH_NAME"
