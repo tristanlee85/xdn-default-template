@@ -26,17 +26,12 @@ pipeline {
       }
     }
 
-    stage('env') {
-      when { branch 'origin/master' }
+    stage('Setup environment') {
       steps {
-        echo "Branch is master $GITHUB_BRANCH"
-      }
-    }
-
-    stage('env1') {
-      when { not { branch 'origin/master' } }
-      steps {
-        echo "Branch is $GITHUB_BRANCH"
+        script {
+          env.BRANCH_NAME = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
+        }
+        sh 'printenv'
       }
     }
 
