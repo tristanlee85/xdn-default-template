@@ -31,17 +31,19 @@ pipeline {
         script {
           def branch = env.GIT_BRANCH
           env.BRANCH_NAME = branch.tokenize("/").last()
+          env.XDN_BRANCH_ARG = "--branch=$BRANCH_NAME"
+          env.XDN_ENV_ARG = "--environment=staging"
         }
         sh 'printenv'
       }
     }
 
-    // stage('Deploy to XDN:staging') {
-    //   when { not { branch 'master' } }
-    //   steps {
-    //     sh "npm run xdn:deploy -- ${'--branch=$BRANCH_NAME' || ''} --token=$xdn_deploy_token --environment=staging"
-    //   }
-    // }
+    stage('Deploy to XDN:staging') {
+      when { not { branch 'master' } }
+      steps {
+        sh "npm run xdn:deploy -- ${'--branch=$BRANCH_NAME' || ''} --token=$xdn_deploy_token --environment=staging"
+      }
+    }
 
     // stage('Deploy to XDN:production') {
     //   when { branch 'master' }
