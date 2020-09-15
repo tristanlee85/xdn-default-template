@@ -5,16 +5,15 @@
 // The site is deployed each time commits are pushed. The environment to which the changes are deployed
 // is based on the following rules:
 //
-// 1.) When pushing to master, changes deployed to the "staging" environment. This environment does not exist
+// 1.) When pushing to `master`, changes are deployed to the "staging" environment. This environment does not exist
 //     by default. You must create it using moovweb.app.
-// 2.) When pushing to any other branch, changes are deployed to the default environment.  An unique URL is created based on the branch and deployment number.
-// 3.) When you publish a release in GitHub, the associated tag will be deployed to the production
-//     environment. This environment does not exist by default, you must create it using moovweb.app.
-//     Therefore, you can push to production by creating a GitHub release, or by using the "Promote to Environment"
-//     menu when viewing a deployment in moovweb.app.
+// 2.) When pushing to any other branch, changes are deployed to the default environment. An unique URL is created
+//     based on the branch and deployment number.
+// 3.) To deploy to the "production" environment, use moovweb.app to promote the build. This environment does not 
+//     exist by default, you must create it using moovweb.app.
 //
-// In order for this action to deploy your site, you must create a deploy token from the site settings page
-// in Moovweb.app and configure it as a secret called "xdn_deploy_token" in your repo on GitHub.
+// In order for this pipeline to deploy your site, you must create a deploy token from the site settings page
+// in Moovweb.app and configure it as an environment variable called "xdn_deploy_token" in your Jenkins configuration.
 // 
 pipeline {
   agent { 
@@ -45,21 +44,14 @@ pipeline {
       }
     }
 
-    stage('Setup environment') {
-      steps {
-        script {
-          def branch = env.GIT_BRANCH
-          env.BRANCH_NAME = branch.tokenize("/").last()
-          env.XDN_BRANCH_ARG = (env.BRANCH_NAME != "master") ? "--branch=$BRANCH_NAME" : ""
-          env.XDN_ENV_ARG = "" // (env.BRANCH_NAME == "master") ? "--environment=production" : ""
-        }
-        sh 'printenv'
-      }
-    }
-
     stage('Deploy to XDN') {
       steps {
-        sh "npm run deploy -- --token=$xdn_deploy_token ${XDN_BRANCH_ARG} ${XDN_ENV_ARG}"
+        script {
+          def branch = env.GIT_BRANCH // typically referenced as `origin/{branch}`
+          env.BRANCH_NAME = branch.tokenize("/").last()
+          env.XDN_ENV_ARG = (env.BRANCH_NAME != "master") ? "--branch=$BRANCH_NAME" : "--environment=staging"
+        }
+        sh "npm run deploy -- --token=$xdn_deploy_token ${XDN_ENV_ARG}"
       }
     }
   }
