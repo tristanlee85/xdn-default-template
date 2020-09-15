@@ -40,7 +40,7 @@ pipeline {
 
     stage('Install packages') {
       steps {
-        sh 'npm ci'
+        sh 'npm i'
       }
     }
 
