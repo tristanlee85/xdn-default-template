@@ -51,7 +51,7 @@ pipeline {
           def branch = env.GIT_BRANCH
           env.BRANCH_NAME = branch.tokenize("/").last()
           env.XDN_BRANCH_ARG = (env.BRANCH_NAME != "master") ? "--branch=$BRANCH_NAME" : ""
-          env.XDN_ENV_ARG = (env.BRANCH_NAME == "master") ? "--environment=production" : ""
+          env.XDN_ENV_ARG = "" // (env.BRANCH_NAME == "master") ? "--environment=production" : ""
         }
         sh 'printenv'
       }
