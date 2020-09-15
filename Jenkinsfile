@@ -48,7 +48,7 @@ pipeline {
         script {
           def branch = env.GIT_BRANCH // typically referenced as `origin/{branch}`
           def url = env.REPO_URL
-          env.XDN_COMMIT_URL = (url.endsWith("/") ? url : url + "/") + "commit/"
+          env.XDN_COMMIT_URL = (url.endsWith("/") ? url : url + "/") + "commit/$GIT_COMMIT"
           env.BRANCH_NAME = branch.tokenize("/").last()
           env.XDN_ENV_ARG = (env.BRANCH_NAME != "master") ? "--branch=$BRANCH_NAME" : "--environment=staging"
         }
