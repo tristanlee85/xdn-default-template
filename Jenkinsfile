@@ -1,4 +1,4 @@
-// Add this file to your project at .Jenkinsfile
+// Add this file to your project at ./Jenkinsfile
 //
 // This Jenkins pipeline deploys your site on the Moovweb XDN.
 //
@@ -18,15 +18,16 @@
 pipeline {
   agent { 
     docker {
-      image 'node:12-alpine'
+      image "node:12-alpine"
     }
   }
   environment {
-    npm_config_cache = 'npm-cache'
-    HOME = '.'
+    REPO_URL = "https://github.com/org/repo/" // (required)
+    npm_config_cache = "npm-cache"
+    HOME = "."
   }
   stages {
-    stage('Checking environment') {
+    stage("Checking environment") {
       when {
         expression {
           env.xdn_deploy_token == null
@@ -34,25 +35,24 @@ pipeline {
       }
       steps {
         echo "You must define the 'xdn_deploy_token' secret in your environment variables"
-        sh 'exit 1'
+        sh "exit 1"
       }
     }
-
-    stage('Install packages') {
+    stage("Install packages") {
       steps {
-        sh 'npm i'
+        sh "npm ci"
       }
     }
-
-    stage('Deploy to XDN') {
+    stage("Deploy to XDN") {
       steps {
         script {
           def branch = env.GIT_BRANCH // typically referenced as `origin/{branch}`
+          def url = env.REPO_URL
+          env.XDN_COMMIT_URL = url.endsWith("/") ? url : url + "/"
           env.BRANCH_NAME = branch.tokenize("/").last()
           env.XDN_ENV_ARG = (env.BRANCH_NAME != "master") ? "--branch=$BRANCH_NAME" : "--environment=staging"
         }
-        sh "printenv"
-        // sh "npm run deploy -- --token=$xdn_deploy_token ${XDN_ENV_ARG}"
+        sh "npm run deploy -- --token=$xdn_deploy_token ${XDN_ENV_ARG} --commit-url=${XDN_COMMIT_URL}"
       }
     }
   }
