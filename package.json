@@ -17,7 +17,7 @@
     "webpack-cli": "^3.3.11"
   },
   "scripts": {
-    "start": "concurrently \"webpack --watch\" \"xdn run\"",
+    "start": "node -v",
     "build": "webpack --progress && xdn build",
     "prod": "xdn run --production",
     "deploy": "xdn deploy",
