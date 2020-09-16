@@ -1,5 +1,7 @@
 # Changelog
 
+## [v0.9](https://github.com/tristanlee85/xdn-default-template/tree/v0.9) (2020-09-16)
+
 ## [v0.8](https://github.com/tristanlee85/xdn-default-template/tree/v0.8) (2020-09-16)
 
 ## [v0.7](https://github.com/tristanlee85/xdn-default-template/tree/v0.7) (2020-09-16)
