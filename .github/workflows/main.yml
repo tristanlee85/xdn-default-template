@@ -34,7 +34,7 @@ jobs:
           repository: ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-      - run: "echo ${{ toJson(steps.get_latest_releases) }}"
+      - run: "echo ${{ toJson(steps.get_latest_releases.outputs.data) }}"
       # - name: Write changelog
       #   run: |
       #     git add -A
