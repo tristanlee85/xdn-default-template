@@ -41,10 +41,10 @@ jobs:
           EOF
           
           node ./scripts/generate-changelog.js
-      # - name: Write changelog
-      #   run: |
-      #     git add -A
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git commit -am "Changelog"
-      #     git push -u origin HEAD:master
+      - name: Write changelog
+        run: |
+          git add -A
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Changelog"
+          git push -u origin HEAD:master
