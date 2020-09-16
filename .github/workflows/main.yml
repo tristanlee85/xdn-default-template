@@ -39,10 +39,8 @@ jobs:
           cat << EOF > release-data.json 
             ${{ steps.get_latest_releases.outputs.data }}
           EOF
-
-          ls -al
-          cat release-data.json
-        # node ./scripts/generate-changelog.js
+          
+          node ./scripts/generate-changelog.js
       # - name: Write changelog
       #   run: |
       #     git add -A
