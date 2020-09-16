@@ -36,7 +36,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       - name: Generate changelog
         run: |
-          echo > release-data.json << EOF
+          cat << EOF > release-data.json 
             ${{ steps.get_latest_releases.outputs.data }}
           EOF
 
