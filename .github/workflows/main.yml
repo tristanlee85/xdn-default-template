@@ -31,7 +31,7 @@ jobs:
         id: get_latest_releases
         with:
           route: GET /repos/:repository/releases
-          repository: ${{ github.repository }}
+          repository: moovweb/xdn
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       - name: Generate changelog
