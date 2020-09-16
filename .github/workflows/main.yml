@@ -9,7 +9,7 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 12
@@ -34,12 +34,10 @@ jobs:
         with:
           token: ${{ secrets.ACTIONS_TOKEN}}
           output: CHANGELOG.md
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v4
-        with:
-          author_name: GitHub Actions
-          author_email: action@github.com
-          message: "Changelog for version ${VERSION}"
-          add: "CHANGELOG.md"
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+      - name: Write changelog
+        run: |
+          git add -A
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Changelog"
+          git push -u origin HEAD:master
