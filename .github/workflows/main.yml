@@ -33,14 +33,15 @@ jobs:
         uses: octokit/request-action@v2.x
         id: get_latest_releases
         with:
-          route: GET /repos/moovweb/xdn/releases
+          route: GET /repos/:repository/releases/latest
+          repository: ${{ github.repository }}
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
-      # - name: Write changelog
-      #   run: |
-      #     git add -A
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git commit -am "Changelog"
-      #     git push -u origin HEAD:master
+      - name: Write changelog
+        run: |
+          git add -A
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Changelog"
+          git push -u origin HEAD:master
