@@ -31,7 +31,9 @@ jobs:
       - run: npm run build
       - name: Generate changelog
         uses: heinrichreimer/action-github-changelog-generator@v2.1.1
-        output: CHANGELOG.md
+        with:
+          token: ${{ secrets.ACTIONS_TOKEN}}
+          output: CHANGELOG.md
       - run: |
         git add -A
         git config --local user.email "action@github.com"
