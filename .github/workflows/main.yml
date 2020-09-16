@@ -37,8 +37,10 @@ jobs:
       - name: Generate changelog
         run: |
           echo > release-data.json << EOF
-            ${{ steps.get_latest_releases.outputs.data }}
+            ${{ steps.get_latest_releases.outputs.data[0] }}
           EOF
+          
+          ls
           cat release-data.json
         # node ./scripts/generate-changelog.js
       # - name: Write changelog
