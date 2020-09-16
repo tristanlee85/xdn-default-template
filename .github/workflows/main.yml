@@ -26,20 +26,9 @@ jobs:
 
       - run: npm ci
       # - run: npm run build
-      - name: Get existing changelog
-        uses: octokit/request-action@v2.x
-        id: get_latest_releases
-        with:
-          route: GET /repos/:repository/releases
-          repository: moovweb/xdn
-        env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       - name: Generate changelog
         run: |
-          cat << EOF > release-data.json 
-            ${{ steps.get_latest_releases.outputs.data }}
-          EOF
-          
+          export RELEASE_DATA=$(curl -H "Authorization: token ${{ secrets.ACTIONS_TOKEN }}" -s https://api.github.com/repos/moovweb/xdn/releases)
           node ./scripts/generate-changelog.js
       - name: Write changelog
         run: |
