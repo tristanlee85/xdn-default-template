@@ -1,6 +1,3 @@
-var stdio = require('stdio');
-var ops = stdio.getopt({
-    'data': {key: 'd', args: 1, required: true, description: 'Release details as JSON'},
-});
+const data = require('../release-data.json');
 
-console.log(JSON.parse(ops.data));
+console.log(JSON.parse(data));

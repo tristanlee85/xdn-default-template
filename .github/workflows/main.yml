@@ -36,9 +36,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       - name: Generate changelog
         run: |
-          echo "${{ steps.get_latest_releases.outputs.data }}" > data.json
-          cat data.json
-      # - run: "node ./scripts/generate-changelog.js --data=${{ fromJson(steps.get_latest_releases.outputs.data) }}"
+          echo "${{ steps.get_latest_releases.outputs.data }}" > release-data.json
+          node ./scripts/generate-changelog.js
       # - name: Write changelog
       #   run: |
       #     git add -A
