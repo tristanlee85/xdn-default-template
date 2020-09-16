@@ -39,6 +39,7 @@ jobs:
           echo > release-data.json << EOF
             ${{ steps.get_latest_releases.outputs.data }}
           EOF
+          cat release-data.json
           node ./scripts/generate-changelog.js
       # - name: Write changelog
       #   run: |
