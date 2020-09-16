@@ -1,6 +1,7 @@
 const data = require('../release-data.json');
+const fs = require('fs');
 
-console.log(data.reduce((acc, v, i) =>
+fs.writeFileSync('./CHANGELOG.md', data.reduce((acc, v, i) =>
 `${acc}
 ${v.body}
 ${i < data.length - 1 && '---' || ''}`, '').trim());
