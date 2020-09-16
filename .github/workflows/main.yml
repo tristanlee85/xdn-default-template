@@ -34,9 +34,10 @@ jobs:
         with:
           token: ${{ secrets.ACTIONS_TOKEN}}
           output: CHANGELOG.md
-      - run: |
-        git add -A
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git commit -am "Changelog"
-        git push -u origin
+      - name: Write changelog
+        run: |
+          git add -A
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Changelog"
+          git push -u origin
