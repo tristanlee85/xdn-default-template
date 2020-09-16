@@ -15,20 +15,20 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
 
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      # - name: Cache node modules
+      #   uses: actions/cache@v1
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with:
+      #     path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
 
-      - run: npm ci
-      - run: npm run build
+      # - run: npm ci
+      # - run: npm run build
       - name: Get existing changelog
         uses: octokit/request-action@v2.x
         id: get_latest_releases
@@ -36,12 +36,12 @@ jobs:
           route: GET /repos/:repository/releases/latest
           repository: ${{ github.repository }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
-      - name: Write changelog
-        run: |
-          git add -A
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -am "Changelog"
-          git push -u origin HEAD:master
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+      - run: "echo ${{ steps.get_latest_release.outputs }}"
+      # - name: Write changelog
+      #   run: |
+      #     git add -A
+      #     git config --local user.email "action@github.com"
+      #     git config --local user.name "GitHub Action"
+      #     git commit -am "Changelog"
+      #     git push -u origin HEAD:master
