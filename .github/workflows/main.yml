@@ -34,7 +34,7 @@ jobs:
           repository: ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-      - run: "node ./scripts/generate-changelog.js --data=${{ steps.get_latest_releases.outputs.data }}"
+      - run: "node ./scripts/generate-changelog.js --data=${{ fromJson(steps.get_latest_releases.outputs.data) }}"
       # - name: Write changelog
       #   run: |
       #     git add -A
