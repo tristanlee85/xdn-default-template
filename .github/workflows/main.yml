@@ -33,9 +33,7 @@ jobs:
         uses: octokit/request-action@v2.x
         id: get_latest_releases
         with:
-          route: GET /repos/:owner/:repo/releases
-          owner: moovweb
-          repo: xdn
+          route: GET /repos/moovweb/xdn/releases
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
       - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
