@@ -40,4 +40,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -am "Changelog"
-          git push -u origin
+          git push -u origin HEAD:master
