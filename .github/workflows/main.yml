@@ -24,7 +24,7 @@ jobs:
       #       ${{ runner.os }}-build-
       #       ${{ runner.os }}-
 
-      # - run: npm ci
+      - run: npm ci && npm i -D stdio
       # - run: npm run build
       - name: Get existing changelog
         uses: octokit/request-action@v2.x
@@ -34,7 +34,7 @@ jobs:
           repository: ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-      - run: "echo ${{ toJson(steps.get_latest_releases.outputs.data) }}"
+      - run: "node ./scripts/generate-changelog.js --data=${{ toJson(steps.get_latest_releases.outputs.data) }}"
       # - name: Write changelog
       #   run: |
       #     git add -A
