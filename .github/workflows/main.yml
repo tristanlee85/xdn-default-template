@@ -28,8 +28,7 @@ jobs:
       # - run: npm run build
       - name: Generate changelog
         run: |
-          export RELEASE_DATA=$(curl -H "Authorization: token ${{ secrets.ACTIONS_TOKEN }}" -s https://api.github.com/repos/moovweb/xdn/releases)
-          node ./scripts/generate-changelog.js
+          node ./scripts/generate-changelog.js ${{ github.repository }} ${{ secrets.ACTIONS_TOKEN }}
       - name: Write changelog
         run: |
           git add -A

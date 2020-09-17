@@ -24,8 +24,5 @@
     "xdn": "xdn",
     "xdn:update": "npm i --save-dev @xdn/cli@latest @xdn/core@latest @xdn/prefetch@latest",
     "xdn:link": "yalc add @xdn/core @xdn/prefetch @xdn/cli"
-  },
-  "dependencies": {
-    "stdio": "^2.1.1"
   }
 }
