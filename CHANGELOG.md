@@ -1,3 +1,11 @@
+## [v2.11.1](https://github.com/moovweb/xdn/releases/tag/v2.11.1) (2020-09-16)
+## What’s Changed
+
+* Update integration tests for POST/GET&xdn_prefetch=1 caching (#494) @phdunham
+* Next.js: Fix xdn build on windows (#492) @markbrocato
+* Fix coverage of nextRoutes (#493) @leotoll
+
+---
 ## [v2.11.0](https://github.com/moovweb/xdn/releases/tag/v2.11.0) (2020-09-16)
 ## What’s Changed
 
@@ -212,24 +220,4 @@
 * Add x-xdn- header tests (#373) @phdunham
 * Post 2.0 merge code review fixes (#407) @ierceg
 * Add public dir to angular routes (#406) @leotoll
-<<<<<<< HEAD
-=======
----
-## [v2.0.0](https://github.com/moovweb/xdn/releases/tag/v2.0.0) (2020-08-12)
-## What’s Changed
-
-* 2.0 (#391) @markbrocato
-* Improved support for nuxt.js, including support for extending nuxt's router and a new @xdn/nuxt/module that you can add to nuxt.config.js to automatically build the service worker and inject code into the browser to install it.
-* Breaking change: switches the route path syntax to match Express (using the path-to-regexp library underneath the hood to parse path expressions).
-* Breaking change: removes the deprecated  function.  Use  instead.
-* Breaking change:  has been moved from the  cache option to the root of the options object. Custom cache keys are now applied to the service worker in addition to the edge. 
-* Add ability to deep fetch based on JSON results (#400)
-* Add forcePrefetchRatio install option (#393)
-* Add custom cache keys to service worker (#392)
-* Add transformRequest to ProxyOptions, allow for POST caching in project code (#387)
-* Add support for Next.js rewrites and redirects (#404)
-
-
-
->>>>>>> 7fda94d46e81977acac4706e68a32706e8b75011
 ---
