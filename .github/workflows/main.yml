@@ -29,8 +29,8 @@ jobs:
       - name: Generate changelog
         run: |
           node ./scripts/generate-changelog.js \
-            --repo=${{ github.repository }} \
-            --token=${{ secrets.MOOVWEB_DOCS_GITHUB_TOKEN }} \
+            --repo=moovweb/xdn \
+            --token=${{ secrets.ACTIONS_TOKEN }} \
             --input=./changelog-in.md \
             --output=./changelog.md
           ls -al
