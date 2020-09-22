@@ -12,27 +12,26 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
 
-      - name: Cache node modules
-        uses: actions/cache@v1
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+      # - name: Cache node modules
+      #   uses: actions/cache@v1
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with:
+      #     path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
+      #       ${{ runner.os }}-build-
+      #       ${{ runner.os }}-
 
-      - run: npm ci
+      # - run: npm ci
       # - run: npm run build
       - name: Generate changelog
         run: |
-          node ./scripts/generate-changelog.js ${{ github.repository }} ${{ secrets.ACTIONS_TOKEN }}
-      - name: Write changelog
-        run: |
-          git add -A
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git commit -am "Changelog"
-          git push -u origin HEAD:master
+          node ../scripts/generate-changelog.js \
+            --repo=${{ github.repository }} \
+            --token=${{ secrets.MOOVWEB_DOCS_GITHUB_TOKEN }} \
+            --input=./changelog-in.md \
+            --output=./changelog.md
+          ls -al
+          cat ./changelog.md

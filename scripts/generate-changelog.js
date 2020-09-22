@@ -1,24 +1,55 @@
+const stdio = require('stdio')
 const fetch = require('node-fetch')
-const fs = require('fs');
-const { parse } = require('path');
+const fs = require('fs')
 
-const [repo, token] = process.argv.slice(2);
+const args = stdio.getopt({
+  repo: { key: 'r', args: 1, description: 'Repository name' },
+  token: { key: 't', args: 1, description: 'API token' },
+  input: { key: 'i', args: 1, description: 'Input file location containing existing markdown' },
+  output: { key: 'o', args: 1, description: 'Output file location' },
+})
 
-if (!repo || !token) {
-  throw 'API token or repository not present. Exiting.';
-}
-
-fetch(`https://api.github.com/repos/${repo}/releases`, {
+fetch(`https://api.github.com/repos/${args.repo}/releases`, {
   headers: {
-    authorization: `token ${token}`
-  }
+    authorization: `token ${args.token}`,
+  },
 })
   .then(res => res.json())
   .then(data => {
-    fs.writeFileSync('./CHANGELOG.md', data.filter(v => !v.draft).reduce((acc, v, i) => `
-      ${acc}
-      ## [${v.tag_name}](${v.html_url}) (${v.published_at.split('T')[0]})
-      ${v.body}
-      ${i < data.length - 1 && '---' || ''}
-    `, '').trim().replace(/^\s+/gm, ''));
-  });
+    let output = '';
+    let prepend = false;
+
+    // read from an existing input file (if available)
+    if (args.input && fs.existsSync(args.input)) {
+      output = fs.readFileSync(args.input, 'utf8');
+      prepend = true;
+    }
+
+    fs.writeFileSync(
+      args.output || './CHANGELOG.md',
+      data
+        // exclude draft releases
+        .filter(v => !v.draft)
+
+        // include only the latest entry if reading from an input file
+        .filter((v, i) => {
+          if (output.length && i === 0) {
+            return true
+          }
+
+          return !output.length
+        })
+        .reduce(
+          (acc, v, i) => `
+            ${!prepend ? acc : ''}
+            ## [${v.tag_name}](${v.html_url}) (${v.published_at.split('T')[0]})
+            ${v.body}
+            ${(i < data.length - 1 && '---') || ''}
+            ${prepend ? acc : ''}
+          `,
+          output
+        )
+        .trim()
+        .replace(/^\s+/gm, '')
+    )
+  })
