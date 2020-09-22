@@ -17,12 +17,10 @@ fetch(`https://api.github.com/repos/${args.repo}/releases`, {
   .then(res => res.json())
   .then(data => {
     let output = '';
-    let prepend = false;
 
     // read from an existing input file (if available)
     if (args.input && fs.existsSync(args.input)) {
       output = fs.readFileSync(args.input, 'utf8');
-      prepend = true;
     }
 
     fs.writeFileSync(
@@ -41,11 +39,11 @@ fetch(`https://api.github.com/repos/${args.repo}/releases`, {
         })
         .reduce(
           (acc, v, i) => `
-            ${!prepend ? acc : ''}
+            ${!output.length ? acc : ''}
             ## [${v.tag_name}](${v.html_url}) (${v.published_at.split('T')[0]})
             ${v.body}
             ${(i < data.length - 1 && '---') || ''}
-            ${prepend ? acc : ''}
+            ${output.length ? acc : ''}
           `,
           output
         )
